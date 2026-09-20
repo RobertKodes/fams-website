@@ -9,7 +9,22 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     X-Frame-Options = "SAMEORIGIN"
 
+# Fotografiile au nume stabile si se schimba rar.
+[[headers]]
+  for = "/assets/foto/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# CSS-ul si JS-ul pastreaza acelasi nume intre versiuni, deci URL-ul lor poarta
+# o amprenta de continut (?v=...) pusa de construieste.py. Fara `immutable`:
+# antetul acela a tinut stilul vechi in cache dupa refacerea site-ului.
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# HTML-ul trebuie verificat la fiecare vizita, altfel o publicare noua nu ajunge.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

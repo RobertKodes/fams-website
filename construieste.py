@@ -17,8 +17,8 @@ servit pentru orice adresa, la orice adancime, deci pastreaza cai absolute.
 Rulare:  python3 construieste.py
 """
 
+import hashlib
 import json
-import re
 from datetime import date
 from pathlib import Path
 
@@ -29,6 +29,19 @@ MANIFEST = RADACINA / "assets" / "foto" / "dimensiuni.json"
 
 with open(MANIFEST, encoding="utf-8") as f:
     DIMENSIUNI = json.load(f)
+
+def amprenta(cale_relativa):
+    """Primele 8 caractere din md5-ul fisierului, pentru ?v= in URL.
+
+    Numele fisierului ramane acelasi (nu vrem gunoi vechi in assets/), dar
+    URL-ul se schimba cand se schimba continutul, si cache-ul se rupe singur.
+    """
+    date_ = (RADACINA / cale_relativa).read_bytes()
+    return hashlib.md5(date_).hexdigest()[:8]
+
+
+V_CSS = amprenta("assets/styles.css")
+V_JS = amprenta("assets/site.js")
 
 DOMENIU = ""
 _d = RADACINA / "domeniu.txt"
@@ -468,7 +481,7 @@ SABLON = """<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
-<link rel="stylesheet" href="{p}assets/styles.css">
+<link rel="stylesheet" href="{p}assets/styles.css?v={v_css}">
 {structurate}
 </head>
 <body{clasa_body}>
@@ -477,7 +490,7 @@ SABLON = """<!doctype html>
 {corp}
 </main>
 {subsol}
-<script src="{p}assets/site.js" defer></script>
+<script src="{p}assets/site.js?v={v_js}" defer></script>
 </body>
 </html>
 """
@@ -504,7 +517,7 @@ def construieste_pagina(pag, absolute=False):
         titlu=pag["titlu_tab"], descriere=pag["descriere"], robots=robots,
         canonic=canonic, og_imagine=og, p=p, structurate=date_structurate(pag, p),
         antet=antet(p, pag["cale"]), corp=corp, subsol=subsol(p),
-        clasa_body=clasa_body)
+        clasa_body=clasa_body, v_css=V_CSS, v_js=V_JS)
 
 
 def scrie(pag, absolute=False):
