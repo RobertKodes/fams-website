@@ -53,9 +53,10 @@ NUME_PUBLIC = {
 
 LATIMI = [280, 420, 560]
 
-IVORIU = (246, 241, 232)
-CERNEALA = (20, 17, 14)
-AUR = (176, 138, 74)
+NEGRU = (10, 9, 8)
+IVORIU = (243, 238, 229)
+AUR = (201, 164, 92)
+GRI = (148, 139, 126)
 
 
 def curata(im):
@@ -66,7 +67,19 @@ def curata(im):
     im = ImageEnhance.Contrast(im).enhance(1.06)
     im = ImageEnhance.Color(im).enhance(1.05)
     im = ImageEnhance.Brightness(im).enhance(1.02)
-    return im
+    return coboara_luminile(im)
+
+
+def coboara_luminile(im, prag=168, factor=.58):
+    """Comprima doar luminile, lasand umbrele neatinse.
+
+    Pe fundal negru, cerul alb-albastru al pozelor tipa si trage ochiul de pe
+    duba. Scazand luminozitatea intregii imagini, duba (deja aproape neagra)
+    s-ar inchide de tot. Curba asta atinge doar valorile peste prag: cerul
+    coboara de la 255 la ~219, duba ramane cum e.
+    """
+    lut = [v if v < prag else round(prag + (v - prag) * factor) for v in range(256)]
+    return im.point(lut * len(im.getbands()))
 
 
 def redimensioneaza(im, latime):
@@ -123,13 +136,27 @@ def rozeta(logo, latime):
     return disc.resize((latime, latime), Image.LANCZOS)
 
 
+def granulatie(latura=128):
+    """Dala de zgomot pentru fundalul negru.
+
+    Negrul plat face benzi vizibile pe ecrane mari si arata ieftin. Peste el,
+    3% zgomot (din CSS) da senzatia de hartie tiparita. Zgomotul e gri neutru
+    si se repeta la 128px - la opacitatea folosita, repetitia nu se vede.
+    """
+    import random
+    random.seed(7)  # aceeasi dala la fiecare rulare, ca sa nu se schimbe hash-ul
+    im = Image.new("L", (latura, latura))
+    im.putdata([random.randint(0, 255) for _ in range(latura * latura)])
+    return im.convert("RGB")
+
+
 def cartela_sociala(foto, logo):
     """Imaginea de 1200x630 pentru partajare (WhatsApp, Facebook, X).
 
     Sursa livrata era 1200x1462 - format portret, pe care retelele il taie prost.
     """
     W, H = 1200, 630
-    card = Image.new("RGB", (W, H), IVORIU)
+    card = Image.new("RGB", (W, H), NEGRU)
     d = ImageDraw.Draw(card)
 
     # fotografia, in dreapta, taiata la inaltimea cartelei
@@ -149,11 +176,13 @@ def cartela_sociala(foto, logo):
 
     titlu = font("Didot.ttc", 68)
     eticheta = font("Futura.ttc", 21)
-    d.text((96, 268), "Family food,", font=titlu, fill=CERNEALA)
-    d.text((96, 344), "beautifully served.", font=titlu, fill=CERNEALA)
+    d.text((96, 268), "Family food,", font=titlu, fill=IVORIU)
+    d.text((96, 344), "beautifully served.", font=titlu, fill=IVORIU)
     d.line([(96, 452), (196, 452)], fill=AUR, width=2)
     spatiat(d, (96, 484), "MOBILE CATERING", eticheta, AUR, 5)
-    spatiat(d, (96, 522), "SURREY", eticheta, (90, 80, 68), 5)
+    spatiat(d, (96, 522), "SURREY", eticheta, GRI, 5)
+    # linie aurie care separa fotografia de text
+    d.line([(W - lat_foto - 1, 0), (W - lat_foto - 1, H)], fill=AUR, width=1)
     return card
 
 
@@ -196,6 +225,8 @@ def main():
 
     (IESIRE / "dimensiuni.json").write_text(
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    granulatie().save(IESIRE / "grain.png", "PNG", optimize=True)
 
     cartela_sociala(taiate["spate-unghi"], logo).save(
         IESIRE / "social-preview.webp", "WEBP", quality=88, method=6)

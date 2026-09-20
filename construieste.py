@@ -82,10 +82,11 @@ def poza(cheie, p, sizes, clasa="", lazy=True, legenda=None):
            f'sizes="{sizes}" width="{dim["w"]}" height="{dim["h"]}" alt="{alt}"'
            f'{incarcare} decoding="async">')
     cls = f"placa {clasa}".strip()
+    cadru = f'<span class="placa__cadru">{img}</span>'
     if legenda:
-        return (f'<figure class="{cls}">{img}'
+        return (f'<figure class="{cls}">{cadru}'
                 f'<figcaption>{legenda}</figcaption></figure>')
-    return f'<figure class="{cls}">{img}</figure>'
+    return f'<figure class="{cls}">{cadru}</figure>'
 
 
 def buton(p, tinta, text, stil="plin"):
@@ -475,7 +476,7 @@ SABLON = """<!doctype html>
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f6f1e8">
+<meta name="theme-color" content="#0a0908">
 <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="{p}site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -558,7 +559,7 @@ def main():
     manifest.write_text(json.dumps({
         "name": C.SITE["nume_lung"], "short_name": "F.A.M.s",
         "start_url": "./", "display": "standalone",
-        "background_color": "#f6f1e8", "theme_color": "#f6f1e8",
+        "background_color": "#0a0908", "theme_color": "#0a0908",
         "icons": [{"src": "assets/foto/fams-mark-192.webp", "sizes": "192x192",
                    "type": "image/webp"},
                   {"src": "assets/foto/fams-mark-288.webp", "sizes": "288x288",
