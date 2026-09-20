@@ -1,7 +1,7 @@
 {
   "name": "FAMs Mobile Catering",
   "short_name": "FAMs",
-  "start_url": "/fams-website/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0c0b0a",
   "theme_color": "#0c0b0a",
