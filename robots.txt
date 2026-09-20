@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Run configure.py with the production domain before launch.
+# It will add the absolute Sitemap URL.
