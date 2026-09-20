@@ -1,15 +1,58 @@
+// F.A.M.s — tot JavaScript-ul site-ului.
+//
+// Deliberat putin: meniul de telefon si linia de sub antet. Restul (acordeonul
+// de la intrebari, starea paginii curente) e facut in HTML si CSS, ca sa mearga
+// si daca fisierul asta nu se incarca.
 
-(() => {
-  const header=document.querySelector('[data-header]'), btn=document.querySelector('[data-menu-toggle]'), menu=document.querySelector('[data-mobile-menu]');
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches, small=matchMedia('(max-width: 900px)').matches;
-  const hs=()=>header?.classList.toggle('scrolled',scrollY>24); hs(); addEventListener('scroll',hs,{passive:true});
-  btn?.addEventListener('click',()=>{const o=!menu.classList.contains('open');menu.classList.toggle('open',o);btn.setAttribute('aria-expanded',String(o))});
-  menu?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');btn?.setAttribute('aria-expanded','false')}));
-  const path=location.pathname.replace(/index\.html$/,'')||'/'; document.querySelectorAll('.desktop-nav a,.mobile-nav a').forEach(a=>{if(new URL(a.href,location.href).pathname===path)a.setAttribute('aria-current','page')});
-  document.querySelectorAll('[data-year]').forEach(e=>e.textContent=new Date().getFullYear());
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -30px'});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
-  if(!reduced&&!small){let t=false;const up=()=>{const vh=innerHeight;document.querySelectorAll('[data-parallax]').forEach(el=>{const r=el.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;const a=Number(el.dataset.parallax||12),p=(r.top+r.height/2-vh/2)/vh;el.style.transform=`translate3d(0,${p*a}px,0) scale(1.045)`});document.querySelectorAll('[data-parallax-bg]').forEach(el=>{const r=el.parentElement.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;const p=(r.top+r.height/2-vh/2)/vh;el.style.transform=`translate3d(0,${p*45}px,0) scale(1.04)`});t=false};addEventListener('scroll',()=>{if(!t){requestAnimationFrame(up);t=true}},{passive:true});up()}
-  const d=document.querySelector('[data-date]');if(d)d.min=new Date().toISOString().split('T')[0];
-  const form=document.querySelector('[data-quote-form]');if(form)form.addEventListener('submit',e=>{form.querySelectorAll('.error-note').forEach(x=>x.remove());form.querySelectorAll('[aria-invalid]').forEach(x=>x.removeAttribute('aria-invalid'));let bad=null;[...form.elements].forEach(f=>{if(f instanceof HTMLElement&&'checkValidity'in f&&!f.checkValidity()){f.setAttribute('aria-invalid','true');if(!bad)bad=f}});if(bad){e.preventDefault();const n=document.createElement('span');n.className='error-note';n.textContent='Please complete this required field correctly.';bad.closest('label')?.append(n);bad.focus();form.querySelector('[data-form-status]').textContent='Please check the highlighted fields.';return}if(location.protocol==='file:'){e.preventDefault();form.querySelector('[data-form-status]').textContent='Preview complete — the form is valid. Deploy on Netlify (or connect another form endpoint) to receive enquiries.'}});
-  const lb=document.querySelector('[data-lightbox]');if(lb){const im=lb.querySelector('img'),close=()=>{lb.hidden=true;im.src='';document.body.style.overflow=''};document.querySelectorAll('[data-lightbox-src]').forEach(b=>b.addEventListener('click',()=>{im.src=b.dataset.lightboxSrc;im.alt=b.getAttribute('aria-label')||'';lb.hidden=false;document.body.style.overflow='hidden';lb.querySelector('button')?.focus()}));lb.querySelector('[data-lightbox-close]')?.addEventListener('click',close);lb.addEventListener('click',e=>{if(e.target===lb)close()});addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)close()})}
+(function () {
+  "use strict";
+
+  // meniul de pe telefon
+  var buton = document.querySelector("[data-meniu]");
+  var meniu = document.getElementById("meniu");
+
+  if (buton && meniu) {
+    buton.addEventListener("click", function () {
+      var deschis = buton.getAttribute("aria-expanded") === "true";
+      buton.setAttribute("aria-expanded", String(!deschis));
+      meniu.hidden = deschis;
+    });
+
+    // Escape inchide meniul si muta focusul inapoi pe buton
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && buton.getAttribute("aria-expanded") === "true") {
+        buton.setAttribute("aria-expanded", "false");
+        meniu.hidden = true;
+        buton.focus();
+      }
+    });
+
+    // daca ecranul se lateste peste pragul din CSS, meniul trebuie inchis:
+    // altfel ramane deschis sub antetul de desktop
+    var prag = window.matchMedia("(min-width: 881px)");
+    var laPrag = function (e) {
+      if (e.matches) {
+        buton.setAttribute("aria-expanded", "false");
+        meniu.hidden = true;
+      }
+    };
+    if (prag.addEventListener) prag.addEventListener("change", laPrag);
+    else prag.addListener(laPrag);
+  }
+
+  // linia de sub antet apare doar cand pagina e derulata
+  var antet = document.querySelector(".antet");
+  if (antet) {
+    var santinela = document.createElement("div");
+    santinela.setAttribute("aria-hidden", "true");
+    santinela.style.cssText = "position:absolute;top:0;height:1px;width:1px";
+    document.body.prepend(santinela);
+
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (intrari) {
+        if (intrari[0].isIntersecting) antet.removeAttribute("data-lipit");
+        else antet.setAttribute("data-lipit", "");
+      }).observe(santinela);
+    }
+  }
 })();

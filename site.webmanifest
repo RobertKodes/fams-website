@@ -1,9 +1,20 @@
 {
-  "name": "FAMs Mobile Catering",
-  "short_name": "FAMs",
+  "name": "F.A.M.s Mobile Catering",
+  "short_name": "F.A.M.s",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0c0b0a",
-  "theme_color": "#0c0b0a",
-  "icons": []
+  "background_color": "#f6f1e8",
+  "theme_color": "#f6f1e8",
+  "icons": [
+    {
+      "src": "assets/foto/fams-mark-192.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "assets/foto/fams-mark-288.webp",
+      "sizes": "288x288",
+      "type": "image/webp"
+    }
+  ]
 }
