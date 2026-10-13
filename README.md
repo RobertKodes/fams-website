@@ -64,18 +64,43 @@ ceruta, nu fata de radacina.
 
 ## Formularul de cerere de oferta
 
-E pregatit pentru **Netlify Forms** (`data-netlify="true"` plus campul ascuns
-`form-name`). Pe Netlify, cererile apar in tabul *Forms* al site-ului.
-**Pe GitHub Pages formularul nu are unde sa trimita** — acolo trebuie legat la
-un serviciu extern (Formspree, Basin) sau la un backend propriu.
+Cand clientul apasa *Send enquiry*:
 
-## Ce nu e inventat
+1. **se deschide WhatsApp** cu toata cererea scrisa frumos (titluri pe grupe,
+   data in clar, doar campurile completate), catre numarul din
+   `continut.py` → `SITE["whatsapp"]`. Clientul doar apasa *send*. Numarul nu
+   apare nicaieri in pagina — F.A.M.s nu vrea apeluri.
+2. **in paralel** cererea pleaca la **Netlify Forms** (`data-netlify="true"`).
+   In Netlify: *Forms → Form notifications → Email* catre
+   `fams.company2021@gmail.com`, ca sa ajunga si pe e-mail.
+3. formularul e inlocuit de un panou cu buton *Send on WhatsApp* (daca
+   telefonul a blocat deschiderea) si adresa de e-mail.
 
-Nu exista pe site telefon, e-mail, adresa, recenzii, numar de evenimente sau ani
-de experienta, pentru ca nu ne-au fost date. Unde lipseste ceva, pagina spune
-sincer ca lipseste — vezi galeria. Cand apar datele reale de contact, se adauga
-in `continut.py` (`SITE`) si in subsol, si se completeaza pagina de
-confidentialitate cu furnizorul formularului si cu o adresa pentru cereri GDPR.
+Fara JavaScript, formularul se trimite clasic la Netlify si duce la `thank-you/`.
+Pe GitHub Pages pasul 2 nu are unde sa trimita, dar WhatsApp merge oricum.
+
+Campurile (si deci si randurile din mesaj) se editeaza in `continut.py` → `FORMULAR`.
+
+## Jurnalul (blog)
+
+Articolele sunt fisiere Markdown in `jurnal/`, cu antet `title` / `description`
+/ `date` / `keywords` — vezi `jurnal/_exemplu.md`. `python3 construieste.py` le
+transforma in `journal/<nume-fisier>/`, cu date structurate `BlogPosting`, le
+pune in sitemap si in `llms.txt`. Pagina *Journal* si linkul din meniu apar
+abia cand exista primul articol. Legaturile interne se scriu de la radacina
+(`/contact/`); generatorul le face relative.
+
+## llms.txt
+
+Generat la fiecare constructie: rezumatul firmei (cine e, unde lucreaza, motto,
+e-mail, retele) si lista paginilor, pentru asistentii AI care recomanda
+furnizori. Cu domeniu configurat, linkurile devin absolute.
+
+## Date de contact
+
+Pe site apar: e-mailul, Instagram, Facebook, TikTok (`SITE` in `continut.py`).
+Nu apar: telefon, adresa, recenzii, preturi — nu ne-au fost date sau nu se
+vor publice. Galeria spune sincer ca are doar duba, pana apar poze cu mancare.
 
 ## Capturi de ecran
 

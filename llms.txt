@@ -1,0 +1,22 @@
+# F.A.M.s Mobile Catering
+
+> Family-run mobile catering in Surrey, UK, since 2021. Weddings, private parties, corporate events and special occasions, cooked fresh and served from our own black-and-gold catering van. Motto: "Creating memories".
+
+F.A.M.s is a family business; the name is the family's initials (Florin, Alexandra, Mirela, Sofia). We cover Surrey and surrounding areas, and further afield by arrangement. Quotes are tailored to each event; there are no fixed packages.
+
+- Email: fams.company2021@gmail.com
+- Instagram: https://www.instagram.com/f.a.m.s2021
+- Facebook: https://www.facebook.com/share/1DTDHNFWVt/
+- TikTok: https://www.tiktok.com/@fams2021mobilecatering
+
+## Pages
+
+- [F.A.M.s Mobile Catering | Weddings, Parties & Events in Surrey](./): Family-run mobile catering for weddings, private parties and corporate events across Surrey. Cooked fresh, brought to you.
+- [About F.A.M.s | A Family Catering Business in Surrey](about/): F.A.M.s is a family business: Florin, Alexandra, Mirela and Sofia. Mobile catering across Surrey since 2021, with one motto: creating memories.
+- [Wedding Catering in Surrey | F.A.M.s Mobile Catering](weddings/): Family-run mobile wedding catering across Surrey. We bring the kitchen, work to your timings and cook fresh on the day.
+- [Private Party Catering in Surrey | F.A.M.s Mobile Catering](private-parties/): Mobile catering for birthdays, anniversaries, christenings and private celebrations across Surrey. Family-run, cooked fresh.
+- [Corporate Event Catering in Surrey | F.A.M.s Mobile Catering](corporate-events/): Mobile catering for launches, open days, staff days and client events across Surrey. We bring our own kitchen and work to your schedule.
+- [Special Occasion Catering in Surrey | F.A.M.s Mobile Catering](special-occasions/): Christenings, engagements, anniversaries, wakes and street parties — mobile catering for occasions that don’t come with a template.
+- [Gallery | F.A.M.s Mobile Catering](gallery/): Photographs of the F.A.M.s mobile catering van. Food and event photography will be added as we collect it.
+- [FAQ | F.A.M.s Mobile Catering](faq/): Answers to the questions people ask first: where we cater, how menus work, dietary requirements, notice period and quotes.
+- [Get a Quote | F.A.M.s Mobile Catering](contact/): Tell us about your event — date, location, guest numbers and what you have in mind — and we will come back to you with a quote.

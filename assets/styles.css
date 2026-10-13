@@ -10,8 +10,12 @@
       Sursele au ~560px latime; la latimea asta ajung pe ecran la ~1.7x-2.3x
       densitate, adica clare. Mai mare inseamna moale, si moale nu arata scump.
 
-   2. Auriul e accent, nu material. Linii de 1px, litere mici majuscule,
-      sigiliul. Suprafete mari aurii nu exista nicaieri.
+   2. Auriul e accent, nu material. Linii de 1px, italicul de pe etichete,
+      sigiliul, initialele familiei. Suprafete mari aurii nu exista nicaieri.
+
+   Majusculele rarite raman doar in meniu si pe butoane (vocea "placii de
+   alama"). Etichetele si campurile de formular sunt in italic / text normal:
+   un rand de majuscule deasupra fiecarui titlu arata a sablon.
 
    Fotografiile sunt cu o duba neagra pe fundal negru, deci fiecare sta intr-o
    rama subtire aurie, pe un panou putin mai deschis - altfel marginile se
@@ -112,19 +116,16 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------- tipografie */
 
-/* Eticheta de sectiune: linie scurta aurie, apoi litere mici majuscule.
-   E singurul ornament care se repeta in tot site-ul. */
+/* Eticheta de sectiune: italic serif auriu, ca scrisul "Creating Memories"
+   de pe spatele dubei. Spune despre ce e sectiunea, nu o decoreaza. */
 .eticheta {
-  display: flex; align-items: center; gap: .9rem;
-  font-size: .6875rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
   font-weight: 400;
-  letter-spacing: .28em;
-  text-transform: uppercase;
+  line-height: 1.4;
   color: var(--aur);
-  margin: 0 0 1.8rem;
-}
-.eticheta::before {
-  content: ""; width: 28px; height: 1px; background: var(--aur); flex: none;
+  margin: 0 0 1.4rem;
 }
 
 .lede {
@@ -247,8 +248,7 @@ a { color: inherit; }
 .placa figcaption {
   margin-top: 1.05rem; padding-top: .9rem;
   border-top: 1px solid var(--linie-fina);
-  font-size: .64rem; font-weight: 300; letter-spacing: .24em;
-  text-transform: uppercase; color: var(--text-slab);
+  font-size: .82rem; font-weight: 300; line-height: 1.5; color: var(--text-slab);
 }
 
 /* ------------------------------------------------------------- deschidere */
@@ -304,7 +304,7 @@ a { color: inherit; }
 .servicii { border-top: 1px solid var(--linie-fina); }
 .serviciu {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
   gap: clamp(16px, 4vw, 56px);
   align-items: baseline;
   padding: clamp(30px, 3.6vw, 46px) 0;
@@ -314,13 +314,36 @@ a { color: inherit; }
 }
 .serviciu h3 { font-size: clamp(1.6rem, 2.5vw, 2.15rem); transition: color .3s ease; }
 .serviciu p { margin: 0; max-width: 46ch; color: var(--text-slab); }
-.serviciu__sageata {
-  font-family: var(--sans); color: var(--aur); font-size: 1rem;
-  transition: transform .4s ease;
-}
 .serviciu:hover { padding-inline: clamp(8px, 1.6vw, 22px); }
 .serviciu:hover h3 { color: var(--aur); }
-.serviciu:hover .serviciu__sageata { transform: translateX(10px); }
+
+/* ------------------------------------------------- initialele familiei --- */
+
+/* Singurul loc unde tipografia face tot spectacolul: F.A.M.s desfacut in
+   cele patru prenume. E povestea numelui, deci sta mare. */
+.nume { padding-block: var(--ritm); border-bottom: 1px solid var(--linie-fina); }
+.nume__grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: clamp(36px, 6vw, 96px); align-items: center;
+}
+.nume__text h2 { margin-bottom: 1.4rem; }
+.nume__text p { max-width: 38ch; margin-bottom: 2rem; }
+.nume__litere {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--linie);
+}
+.nume__litere li {
+  padding-top: clamp(14px, 2vw, 26px);
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.nume__litera {
+  font-family: var(--serif); font-weight: 300; line-height: .9;
+  font-size: clamp(4.2rem, 11vw, 9.5rem); color: var(--aur);
+}
+/* punctele din F.A.M.s, mai stinse decat literele */
+.nume__litere li:not(:last-child) .nume__litera::after { content: "."; color: var(--aur-adinc); }
+.nume__prenume { font-size: .95rem; color: var(--ivoriu); }
 
 /* ---------------------------------------------- declaratia cu sigiliul --- */
 
@@ -447,22 +470,17 @@ a { color: inherit; }
 
 .formular fieldset { border: 0; padding: 0; margin: 0 0 clamp(34px, 4vw, 56px); }
 .formular legend {
-  display: flex; align-items: center; gap: .9rem;
-  font-size: .6875rem; font-weight: 400; letter-spacing: .28em;
-  text-transform: uppercase; color: var(--aur);
-  padding: 0 0 1.5rem; border-bottom: 1px solid var(--linie);
+  font-family: var(--serif); font-size: 1.75rem; font-weight: 300; line-height: 1.2;
+  color: var(--ivoriu);
+  padding: 0 0 1rem; border-bottom: 1px solid var(--linie);
   width: 100%; margin-bottom: 2rem;
 }
-.formular legend::before { content: ""; width: 28px; height: 1px; background: var(--aur); flex: none; }
 .campuri { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.7rem 2rem; }
 .camp { margin: 0; display: flex; flex-direction: column; gap: .6rem; }
 .camp--lat { grid-column: 1 / -1; }
-.camp label {
-  font-size: .66rem; font-weight: 300; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--text-slab);
-}
+.camp label { font-size: .88rem; font-weight: 300; line-height: 1.4; color: var(--text-slab); }
 .camp abbr { color: var(--aur); text-decoration: none; }
-.optional { text-transform: none; letter-spacing: .04em; font-style: italic; opacity: .7; }
+.optional { font-family: var(--serif); font-style: italic; font-size: .95rem; opacity: .75; margin-left: .2rem; }
 
 .camp input:not([type="checkbox"]), .camp select, .camp textarea {
   font-family: var(--sans); font-size: 1rem; font-weight: 300; color: var(--ivoriu);
@@ -488,12 +506,12 @@ a { color: inherit; }
 /* WebKit deseneaza pictograma de calendar/ceas in negru pe negru */
 .camp input::-webkit-calendar-picker-indicator { filter: invert(72%) sepia(30%) saturate(560%) hue-rotate(2deg); }
 
-.consimtamant label {
+.consimtamant label, .camp--bifa label {
   flex-direction: row; display: flex; gap: 1rem; align-items: flex-start;
   text-transform: none; letter-spacing: .01em; font-size: .9rem; line-height: 1.7;
   color: var(--text-slab);
 }
-.consimtamant input {
+.consimtamant input, .camp--bifa input {
   -webkit-appearance: checkbox; appearance: auto;
   width: 1.05rem; height: 1.05rem; flex: none; margin-top: .4rem;
   accent-color: var(--aur);
@@ -501,6 +519,17 @@ a { color: inherit; }
 .consimtamant a { color: var(--aur); }
 
 .formular .buton { margin-top: 2.6rem; }
+
+/* dupa trimitere: formularul dispare, ramane pasul de WhatsApp */
+.trimis {
+  scroll-margin-top: 120px;
+  border-top: 1px solid var(--aur); padding-top: clamp(28px, 3.6vw, 44px);
+}
+.trimis:focus { outline: none; }
+.trimis h2 { margin-bottom: 1.6rem; }
+.trimis p { max-width: 46ch; }
+.trimis p a { color: var(--aur); }
+.trimis .buton { margin-top: 1.4rem; }
 .nota { font-size: .8rem; color: var(--text-slab); margin-top: 1.5rem; }
 
 .alaturi {
@@ -522,7 +551,34 @@ a { color: inherit; }
 }
 .alaturi__pasi strong { font-weight: 400; color: var(--ivoriu); }
 .alaturi__zona { font-size: .95rem; color: var(--text-slab); padding-top: 2rem; border-top: 1px solid var(--linie-fina); }
-.alaturi__zona .eticheta { margin-bottom: .9rem; }
+.alaturi__zona .eticheta { margin-bottom: .5rem; }
+.alaturi__zona + .alaturi__zona { margin-top: 2rem; }
+.alaturi__zona a { color: var(--aur); text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+/* ---------------------------------------------------------------- jurnal */
+
+.articol-rand { align-items: start; }
+.articol-rand time {
+  grid-row: span 2; font-family: var(--serif); font-style: italic;
+  font-size: 1.1rem; color: var(--aur); padding-top: .4rem;
+}
+.articol-rand h3 { grid-column: 2; }
+.articol-rand p { grid-column: 2; }
+.titlu-pagina time { font: inherit; }
+
+.articol { font-size: 1.06rem; }
+.articol h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); margin: 2.6rem 0 1.1rem; }
+.articol h3 { margin: 2rem 0 .8rem; }
+.articol ul, .articol ol { padding-left: 1.2rem; margin: 0 0 1.15em; }
+.articol li { margin-bottom: .4rem; }
+.articol li::marker { color: var(--aur); }
+.articol a { color: var(--aur); text-underline-offset: 3px; }
+.articol strong { font-weight: 400; color: var(--ivoriu); }
+.articol blockquote {
+  margin: 2rem 0; padding-left: 1.4rem; border-left: 1px solid var(--aur);
+  font-family: var(--serif); font-style: italic; font-size: 1.5rem;
+  line-height: 1.35; color: var(--ivoriu);
+}
 
 /* ------------------------------------------------------------------ final */
 
@@ -559,13 +615,25 @@ a { color: inherit; }
 }
 .subsol__nav a:hover { color: var(--aur); border-bottom-color: var(--aur); }
 .subsol__info p { font-size: .95rem; }
-.subsol__nota { margin-top: 1.6rem; font-size: .85rem; color: var(--text-slab); opacity: .8; max-width: 36ch; }
+.subsol__info .eticheta { margin-bottom: .6rem; }
+.subsol__info p + .eticheta { margin-top: 2.2rem; }
+.subsol__email {
+  color: var(--ivoriu); text-decoration: none; overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--linie); padding-bottom: 2px;
+}
+.subsol__email:hover { color: var(--aur); border-bottom-color: var(--aur); }
+.subsol__retele { display: flex; flex-wrap: wrap; gap: .4rem 1.6rem; margin-top: 1rem; }
+.subsol__retele a {
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  text-decoration: none; color: var(--aur);
+}
+.subsol__retele a:hover { color: var(--ivoriu); }
 
 .subsol__jos {
   display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
   border-top: 1px solid var(--linie-fina);
   padding-block: 1.8rem 2.2rem;
-  font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+  font-size: .82rem;
   color: var(--text-slab);
 }
 .subsol__jos p { margin: 0; }
@@ -589,8 +657,9 @@ a { color: inherit; }
   .deschidere__foto .placa { width: min(var(--foto-max), 78vw); }
   .cap--doua { grid-template-columns: minmax(0, 1fr); align-items: start; }
   .proza { grid-template-columns: minmax(0, 1fr); }
-  .serviciu { grid-template-columns: minmax(0, 1fr) auto; gap: .5rem 1.5rem; }
-  .serviciu p { grid-column: 1 / -1; }
+  .serviciu { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+  .articol-rand time, .articol-rand h3, .articol-rand p { grid-column: 1; grid-row: auto; }
+  .nume__grid { grid-template-columns: minmax(0, 1fr); }
   .pasi, .puncte { grid-template-columns: minmax(0, 1fr); }
   .galerie { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -602,6 +671,7 @@ a { color: inherit; }
   .trio .placa:last-child { display: none; }
   .campuri { grid-template-columns: minmax(0, 1fr); }
   .actiuni { gap: 1.4rem 2rem; }
+  .nume__prenume { font-size: .78rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
