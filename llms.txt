@@ -20,3 +20,5 @@ F.A.M.s is a family business; the name is the family's initials (Florin, Alexand
 - [Gallery | F.A.M.s Mobile Catering](gallery/): Photographs of the F.A.M.s mobile catering van. Food and event photography will be added as we collect it.
 - [FAQ | F.A.M.s Mobile Catering](faq/): Answers to the questions people ask first: where we cater, how menus work, dietary requirements, notice period and quotes.
 - [Get a Quote | F.A.M.s Mobile Catering](contact/): Tell us about your event — date, location, guest numbers and what you have in mind — and we will come back to you with a quote.
+- [Booking Terms | F.A.M.s Mobile Catering](booking-terms/): The terms on which F.A.M.s Mobile Catering takes bookings: quotes, deposits, changes, cancellations, allergies and access for the van.
+- [Allergens & Dietary Requirements | F.A.M.s Mobile Catering](allergens/): How F.A.M.s Mobile Catering handles allergies and dietary requirements: written information on the 14 major allergens for every dish on your menu.

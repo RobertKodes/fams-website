@@ -652,6 +652,12 @@ a { color: inherit; }
 .subsol__jos p { margin: 0; }
 .subsol__jos a { text-decoration: none; border-bottom: 1px solid var(--linie); padding-bottom: 2px; }
 .subsol__jos a:hover { color: var(--aur); }
+.subsol__legal { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; }
+.nota a { color: var(--aur); }
+.text-lung ul { margin: 0 0 1.15em; padding-left: 1.2rem; columns: 2; column-gap: 2.4rem; }
+.text-lung li { margin-bottom: .35rem; break-inside: avoid; }
+.text-lung li::marker { color: var(--aur); }
+@media (max-width: 620px) { .text-lung ul { columns: 1; } }
 
 /* --------------------------------------------------------------- ecrane mici */
 

@@ -88,6 +88,19 @@ def _cine_suntem():
     return cine
 
 
+def _cine_suntem_scurt():
+    f = FIRMA
+    text = "F.A.M.s Mobile Catering"
+    if f["nume_legal"]:
+        text += f", run by {f['nume_legal']}"
+    if f["nr_companie"]:
+        text += f" (company number {f['nr_companie']})"
+    if f["adresa"]:
+        text += f", {f['adresa']}"
+    return (text + ". You can reach us at " + SITE["email"] + ". In these terms, "
+            "“we” and “us” means F.A.M.s, and “you” means the person making the booking.")
+
+
 SECTIUNI_CONFIDENTIALITATE = [
     ("Who we are", [_cine_suntem()]),
     ("What you give us",
@@ -590,6 +603,188 @@ PAGINI = [
 
         {"tip": "text_lung",
          "sectiuni": SECTIUNI_CONFIDENTIALITATE},
+    ],
+},
+
+# --------------------------------------------------------- booking terms ---
+# Termenii nu inventeaza cifre (avans, termene, taxe de anulare): trimit la
+# oferta scrisa, care le stabileste pentru fiecare eveniment. Asa raman
+# adevarati pentru orice comanda, pana cand familia decide valori fixe.
+{
+    "cale": "booking-terms/",
+    "titlu_tab": "Booking Terms | F.A.M.s Mobile Catering",
+    "descriere": "The terms on which F.A.M.s Mobile Catering takes bookings: quotes, "
+                 "deposits, changes, cancellations, allergies and access for the van.",
+    "blocuri": [
+        {"tip": "titlu_pagina",
+         "eticheta": "Booking terms",
+         "titlu": "The small print,<br>in plain English.",
+         "lede": "These terms apply to every booking with F.A.M.s Mobile Catering. "
+                 "Your written quote sets out the details for your event; where it "
+                 "says something different from this page, the quote applies. "
+                 "Last updated 13 October 2026."},
+
+        {"tip": "text_lung",
+         "sectiuni": [
+             ("Who you are booking with",
+              [_cine_suntem_scurt()]),
+             ("Quotes",
+              ["Enquiries and quotes are free and don’t commit you to anything. "
+               "Every menu is built for the event, so every quote is written for "
+               "you: it sets out the menu, the number of guests, the serving times, "
+               "the price, any deposit, the payment dates and how long the quote "
+               "stays open."]),
+             ("Confirming a booking",
+              ["Your date is booked once we have confirmed it to you in writing (by "
+               "email or WhatsApp) and received any deposit stated in your quote. "
+               "Until then, we can’t hold the date for you."]),
+             ("Changes to numbers, menu or timings",
+              ["Tell us about changes as early as you can. We will always try to "
+               "accommodate them, and we will tell you before the event if a change "
+               "affects the price. Final guest numbers and any allergy details are "
+               "needed by the date given in your quote, so that we can buy and "
+               "prepare the right food."]),
+             ("Payment",
+              ["Payments are due on the dates and by the methods set out in your "
+               "quote or invoice."]),
+             ("If you need to cancel",
+              ["Please tell us in writing as soon as you know. Any cancellation "
+               "charges, and how much of a deposit can be returned, are set out in "
+               "your quote; they reflect the food we have bought, the work already "
+               "done, and other bookings we have turned away for your date.",
+               "Because our catering is booked for a specific date, the 14-day "
+               "cancellation period in the Consumer Contracts Regulations 2013 does "
+               "not apply to it. This does not affect your other legal rights."]),
+             ("If we need to cancel",
+              ["We will only cancel for reasons outside our control, such as "
+               "serious illness, the van breaking down or dangerous weather. If that "
+               "happens we will tell you straight away, help you find an alternative "
+               "where we can, and refund everything you have paid us for that event."]),
+             ("The venue and the van",
+              ["You are responsible for making sure the van has permission to park at "
+               "the venue, safe and suitable access, and a reasonably level space to "
+               "work from, and for telling us about any rules the venue has. If the "
+               "venue needs anything from us, such as insurance or food hygiene "
+               "documents, let us know when you book."]),
+             ("Allergies and dietary requirements",
+              ["Tell us about every allergy and dietary requirement in full, before "
+               "the date in your quote. Once your menu is agreed we give you written "
+               "information on the 14 major allergens for every dish. Our food is "
+               "prepared in a kitchen that handles many ingredients, so we can’t "
+               "promise any dish is completely free from traces of an allergen. "
+               "<a href=\"../allergens/\">How we handle allergens</a>."]),
+             ("Food after service",
+              ["Food is prepared to be eaten during the agreed serving times. For "
+               "safety, we can’t be responsible for food kept and eaten after we "
+               "have left."]),
+             ("Our responsibility to you",
+              ["We will prepare and serve your food with reasonable care and skill, "
+               "as the law requires. Nothing in these terms limits our liability "
+               "for death or personal injury caused by our negligence, for fraud, or "
+               "for anything else the law does not allow us to limit. Otherwise, we "
+               "are not responsible for losses that were not foreseeable when you "
+               "booked, or that were caused by things outside our control."]),
+             ("If something isn’t right",
+              ["Tell us on the day if you can, so that we can put it right there and "
+               "then; otherwise, email " + SITE["email"] + " as soon as possible "
+               "after the event. We will look into it and reply properly."]),
+             ("The law that applies",
+              ["These terms are governed by the law of England and Wales. If you live "
+               "elsewhere in the UK, you can also bring proceedings in your local "
+               "courts."]),
+         ]},
+
+        {"tip": "final",
+         "titlu": "Questions about<br>the terms?",
+         "text": "Ask when you enquire. We would rather explain them than have you guess.",
+         "actiune": ("contact/", "Start an enquiry")},
+    ],
+},
+
+# ------------------------------------------------------------- allergens ---
+{
+    "cale": "allergens/",
+    "titlu_tab": "Allergens & Dietary Requirements | F.A.M.s Mobile Catering",
+    "descriere": "How F.A.M.s Mobile Catering handles allergies and dietary "
+                 "requirements: written information on the 14 major allergens for "
+                 "every dish on your menu.",
+    "blocuri": [
+        {"tip": "titlu_pagina",
+         "eticheta": "Allergens",
+         "titlu": "Allergies, taken<br>seriously.",
+         "lede": "Every menu we cook is written for one event, so allergen "
+                 "information is written for it too."},
+
+        {"tip": "text_lung",
+         "sectiuni": [
+             ("Tell us early, and in full",
+              ["Put every allergy and dietary requirement in your enquiry: who it is "
+               "for, what they must avoid, and how severe it is. The earlier we know, "
+               "the more we can plan around it."]),
+             ("What you get from us",
+              ["Once your menu is agreed, we give you written allergen information "
+               "for every dish, and we talk it through with you. On the day, ask us "
+               "about any dish before you eat it — we will always answer."]),
+             ("The 14 major allergens",
+              ["UK law names fourteen allergens that we must tell you about whenever "
+               "they are in our food:",
+               "<ul><li>Celery</li><li>Cereals containing gluten, such as wheat, rye, "
+               "barley and oats</li><li>Crustaceans, such as prawns and crab</li>"
+               "<li>Eggs</li><li>Fish</li><li>Lupin</li><li>Milk</li>"
+               "<li>Molluscs, such as mussels and squid</li><li>Mustard</li>"
+               "<li>Tree nuts, such as almonds, hazelnuts and cashews</li>"
+               "<li>Peanuts</li><li>Sesame</li><li>Soya</li>"
+               "<li>Sulphur dioxide and sulphites</li></ul>"]),
+             ("What we can’t promise",
+              ["Our food is prepared in a kitchen that handles many ingredients, so "
+               "we can’t guarantee any dish is completely free from traces of an "
+               "allergen. If an allergy is severe and we can’t cater for it safely, "
+               "we will tell you plainly rather than take the risk."]),
+             ("Your details",
+              ["Allergy information is health information, so we use it only to plan "
+               "safe food for your event. <a href=\"../privacy/\">How we handle it</a>."]),
+         ]},
+
+        {"tip": "final",
+         "titlu": "Planning for<br>an allergy?",
+         "text": "Put the details in your enquiry and we’ll come back to you on what "
+                 "we can safely offer.",
+         "actiune": ("contact/", "Start an enquiry")},
+    ],
+},
+
+# --------------------------------------------------------- accessibility ---
+{
+    "cale": "accessibility/",
+    "titlu_tab": "Accessibility | F.A.M.s Mobile Catering",
+    "descriere": "How the F.A.M.s Mobile Catering website is built to be usable by "
+                 "everyone, and how to reach us if something doesn’t work for you.",
+    "indexare": False,
+    "blocuri": [
+        {"tip": "titlu_pagina",
+         "eticheta": "Accessibility",
+         "titlu": "A site that works<br>for everyone.",
+         "lede": "We want anyone to be able to find out about us and send an "
+                 "enquiry, however they use the web."},
+
+        {"tip": "text_lung",
+         "sectiuni": [
+             ("What we have done",
+              ["The site aims to meet the Web Content Accessibility Guidelines "
+               "(WCAG) 2.2 at level AA. Text has strong contrast against the "
+               "background, every page can be used with a keyboard alone, there is a "
+               "link to skip straight to the content, images have text descriptions, "
+               "and animation is switched off if your device asks for reduced motion.",
+               "The text resizes with your browser, and the layout works on phones, "
+               "tablets and computers."]),
+             ("If something doesn’t work for you",
+              ["If you find anything hard to use, or would rather not use the online "
+               "form, email us at " + SITE["email"] + " with whatever details you "
+               "have, and we will take it from there. Tell us what went wrong and we "
+               "will fix it."]),
+             ("Last reviewed",
+              ["13 October 2026."]),
+         ]},
     ],
 },
 

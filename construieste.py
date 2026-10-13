@@ -287,7 +287,7 @@ def bloc_intrebari(b, p):
 def bloc_text_lung(b, p):
     parti = []
     for titlu, paragrafe in b["sectiuni"]:
-        para = "".join(f"<p>{t}</p>" for t in paragrafe)
+        para = "".join(t if t.startswith("<ul") else f"<p>{t}</p>" for t in paragrafe)
         parti.append(f"<section><h2>{titlu}</h2>{para}</section>")
     return f"""<div class="sectiune">
   <div class="container"><div class="text-lung">{"".join(parti)}</div></div>
@@ -346,7 +346,8 @@ def bloc_formular(b, p):
           <a href="{p}privacy/">How we handle it</a>.</span></label>
       </p>
       <button class="buton" type="submit">Send enquiry</button>
-      <p class="nota">Fields marked <abbr title="required">*</abbr> are required.</p>
+      <p class="nota">Fields marked <abbr title="required">*</abbr> are required.
+      Bookings are made on our <a href="{p}booking-terms/">booking terms</a>.</p>
     </form>
     <div class="trimis" data-trimis hidden tabindex="-1">
       <h2>One last tap.</h2>
@@ -455,6 +456,10 @@ def subsol(p):
     retele = "".join(f'<a href="{u}" rel="noopener me" target="_blank">{n}</a>'
                      for n, u in C.SITE["social"])
     an = date.today().year
+    fhrs = ""
+    if C.FIRMA["fhrs_id"]:
+        fhrs = (f'<a href="https://ratings.food.gov.uk/business/{C.FIRMA["fhrs_id"]}" '
+                f'rel="noopener" target="_blank">Food hygiene rating</a>\n      ')
     return f"""<footer class="subsol">
   <div class="container subsol__grid">
     <div class="subsol__marca">
@@ -477,7 +482,10 @@ def subsol(p):
   </div>
   <div class="container subsol__jos">
     <p>&copy; {an} {C.SITE["nume_lung"]}{date_legale()}</p>
-    <p><a href="{p}privacy/">Privacy &amp; cookies</a></p>
+    <p class="subsol__legal">{fhrs}<a href="{p}booking-terms/">Booking terms</a>
+      <a href="{p}allergens/">Allergens</a>
+      <a href="{p}privacy/">Privacy &amp; cookies</a>
+      <a href="{p}accessibility/">Accessibility</a></p>
   </div>
 </footer>"""
 
