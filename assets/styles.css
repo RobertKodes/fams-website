@@ -22,6 +22,18 @@
    topesc in pagina.
 */
 
+/* Fonturile stau pe site, nu la Google: altfel fiecare vizita trimite IP-ul
+   vizitatorului catre Google, adica date personale catre un tert fara temei.
+   Fisierele vin din @fontsource (licenta SIL OFL 1.1), subsetul latin. */
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 300; font-display: swap; src: url("fonturi/cormorant-garamond-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonturi/cormorant-garamond-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonturi/cormorant-garamond-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 300; font-display: swap; src: url("fonturi/cormorant-garamond-latin-300-italic.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonturi/cormorant-garamond-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 300; font-display: swap; src: url("fonturi/jost-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonturi/jost-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonturi/jost-latin-500-normal.woff2") format("woff2"); }
+
 :root {
   --negru:      #0a0908;
   --panou:      #121010;
@@ -460,6 +472,7 @@ a { color: inherit; }
 }
 .text-lung section:first-child { padding-top: 0; margin-top: 0; border-top: 0; }
 .text-lung h2 { font-size: 1.7rem; margin-bottom: 1.1rem; }
+.text-lung section a { color: var(--aur); text-underline-offset: 3px; }
 
 /* -------------------------------------------------------------- formular */
 

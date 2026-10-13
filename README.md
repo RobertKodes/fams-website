@@ -96,11 +96,29 @@ Generat la fiecare constructie: rezumatul firmei (cine e, unde lucreaza, motto,
 e-mail, retele) si lista paginilor, pentru asistentii AI care recomanda
 furnizori. Cu domeniu configurat, linkurile devin absolute.
 
-## Date de contact
+## Date de contact si partea legala (UK)
 
 Pe site apar: e-mailul, Instagram, Facebook, TikTok (`SITE` in `continut.py`).
-Nu apar: telefon, adresa, recenzii, preturi — nu ne-au fost date sau nu se
-vor publice. Galeria spune sincer ca are doar duba, pana apar poze cu mancare.
+Nu apar: telefon, recenzii, preturi.
+
+**Datele legale ale firmei** stau in `continut.py` → `FIRMA` (nume legal,
+forma juridica, adresa, nr. de companie, TVA, id-ul de rating de igiena). Ce e
+gol nu apare; ce se completeaza apare automat in subsol, pe pagina de
+confidentialitate si in datele structurate. Electronic Commerce Regulations 2002
+cer pe site **numele legal** (pentru sole trader: numele persoanei, daca difera
+de numele comercial) si **o adresa geografica**; pentru Ltd si numarul de
+companie si sediul social; TVA doar daca sunt inregistrati.
+
+**Confidentialitate** (`privacy/`): scrisa dupa art. 13 UK GDPR — operator,
+date, scop si temei, destinatari (Netlify, Gmail, WhatsApp), transfer SUA
+(Netlify e certificat DPF + UK Extension), pastrare (`PASTRARE_CERERI`),
+drepturi, plangere la ICO, cookie-uri. Datele despre alergii sunt date de
+sanatate, deci bifa din formular e consimtamant explicit pentru ele.
+
+**Cookie-uri**: site-ul nu seteaza niciunul si nu are analytics, deci nu e
+nevoie de banner. Fonturile sunt pe site (`assets/fonturi/`, licenta OFL), nu
+la Google. Daca se adauga vreodata analytics sau pixeli (Meta, TikTok, Google),
+trebuie banner de consimtamant si actualizata pagina de confidentialitate.
 
 ## Capturi de ecran
 

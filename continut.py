@@ -29,6 +29,24 @@ SITE = {
     ],
 }
 
+# Datele legale ale firmei. Le cer Electronic Commerce Regulations 2002 si,
+# pentru Ltd, Companies Act: cine sta in spatele site-ului si unde poate fi
+# gasit. Ce e gol nu apare pe site; ce se completeaza apare in subsol si pe
+# pagina de confidentialitate. NU se inventeaza - se cer de la client.
+FIRMA = {
+    # "Ion Popescu" (sole trader) sau "F.A.M.s Catering Ltd" (companie)
+    "nume_legal": "",
+    "forma": "",            # "sole trader", "partnership" sau "limited company"
+    "adresa": "",           # adresa geografica a afacerii (nu e obligatoriu acasa)
+    "nr_companie": "",      # doar pentru Ltd, ex. "12345678"
+    "tva": "",              # doar daca sunt platitori de TVA, ex. "GB123456789"
+    "fhrs_id": "",          # id-ul din ratings.food.gov.uk, daca vor sa arate ratingul
+}
+
+# Cat tinem cererile care nu devin rezervari. Decizia clientului, nu a noastra;
+# 12 luni e o valoare obisnuita si o spunem ca atare pe pagina de confidentialitate.
+PASTRARE_CERERI = "12 months"
+
 # Povestea numelui: initialele familiei. Apare pe prima pagina si la About.
 FAMILIA = [("F", "Florin"), ("A", "Alexandra"), ("M", "Mirela"), ("s", "Sofia")]
 
@@ -49,6 +67,77 @@ FOTO = {
     "spate": ("van-rear", "The back of the FAMs van: Mobile Catering, Creating Memories"),
     "unghi": ("van-rear-angle", "The FAMs van from the rear three-quarter, parked under a tree"),
 }
+
+# ------------------------------------------------- confidentialitate (UK GDPR)
+# Continutul cerut de articolele 13 UK GDPR: cine e operatorul, ce date, de ce,
+# pe ce temei, cui ajung, transferuri, cat se tin, drepturi, plangere la ICO.
+
+def _cine_suntem():
+    f = FIRMA
+    if f["nume_legal"]:
+        cine = (f"F.A.M.s Mobile Catering is run by {f['nume_legal']}"
+                + (f", a {f['forma']}" if f["forma"] else "") + ". ")
+    else:
+        cine = "F.A.M.s Mobile Catering is a family business based in Surrey. "
+    if f["nr_companie"]:
+        cine += f"Registered in England and Wales, company number {f['nr_companie']}. "
+    if f["adresa"]:
+        cine += f"Our address is {f['adresa']}. "
+    cine += ("We decide how the details you send us are used, which makes us the "
+             f"“controller” under UK data protection law. Contact: {SITE['email']}.")
+    return cine
+
+
+SECTIUNI_CONFIDENTIALITATE = [
+    ("Who we are", [_cine_suntem()]),
+    ("What you give us",
+     ["Through the enquiry form: your name, email, phone number, company (if any), "
+      "and the details of your event — type, date, times, guest numbers, location, "
+      "the food you have in mind, allergies and dietary requirements, how you heard "
+      "about us, and anything else you add.",
+      "If you message or email us directly, we receive whatever you choose to send."]),
+    ("Why we use it, and on what basis",
+     ["To reply to your enquiry, prepare a quote and, if you book, plan and deliver "
+      "the catering. The legal basis is that you have asked us to take these steps "
+      "before entering into a contract, and then to perform it.",
+      "Allergy and dietary details can count as health information. We use them "
+      "only to plan food that is safe for your guests, on the basis of your "
+      "explicit consent, which you give with the tick box on the form. Please give "
+      "us only what is relevant to the catering.",
+      "We do not sell your details, we do not use them for marketing, and we do not "
+      "use them to make automated decisions about you."]),
+    ("Who else sees it",
+     ["Netlify, Inc., which hosts this site and stores form submissions. Netlify is "
+      "based in the United States and certified under the UK Extension to the "
+      "EU–US Data Privacy Framework, which UK law recognises as an adequate "
+      "safeguard for transfers to the US.",
+      "Google (Gmail), which receives the email copy of your enquiry.",
+      "WhatsApp (Meta). When you send the form, your details are written into a "
+      "WhatsApp message on your own device. Nothing reaches WhatsApp unless you "
+      "press send there yourself; if you do, WhatsApp’s own privacy policy applies "
+      "to that message.",
+      "Beyond these, we share your details only if the law requires it."]),
+    ("How long we keep it",
+     [f"Enquiries that don’t become bookings are deleted within {PASTRARE_CERERI}. "
+      "For bookings, we keep what we need to deliver the event, and invoices and "
+      "accounting records for as long as HMRC requires (normally six years)."]),
+    ("Your rights",
+     ["You can ask for a copy of what we hold about you, ask us to correct it, "
+      "delete it or stop using it, and withdraw your consent for allergy details at "
+      "any time. Write to " + SITE["email"] + ". We will reply within one month.",
+      "If you are unhappy with how we have handled your details, please tell us "
+      "first so we can put it right. You can also complain to the Information "
+      "Commissioner’s Office: <a href=\"https://ico.org.uk/make-a-complaint/\">"
+      "ico.org.uk/make-a-complaint</a>, 0303 123 1113."]),
+    ("Cookies and tracking",
+     ["This site sets no cookies and uses no analytics, advertising or tracking "
+      "tools. Fonts and images are served from this site itself, so visiting it "
+      "does not send your details to Google or anyone else. If that ever changes, "
+      "this page will change first."]),
+    ("Links to other sites",
+     ["Our Instagram, Facebook and TikTok links open those platforms, which have "
+      "their own privacy policies."]),
+]
 
 # ----------------------------------------------------------------- paginile
 
@@ -442,9 +531,10 @@ PAGINI = [
               "Yes. We start from your guests, venue and timings, then build the menu "
               "to fit. There is no fixed package you have to squeeze into."),
              ("Can you handle allergies and dietary requirements?",
-              "Tell us when you enquire, in full. If there is an allergy involved we "
-              "will be specific with you about what we can safely offer, and about "
-              "anything we cannot."),
+              "Tell us when you enquire, in full. Once your menu is agreed, we give "
+              "you written allergen information for every dish, covering the 14 "
+              "major allergens, and we talk it through with you. If there is an "
+              "allergy we cannot cater for safely, we will tell you plainly."),
              ("How far ahead should we book?",
               "As early as you can, especially for summer weekends. If your event is "
               "soon, ask anyway — sometimes a date is free."),
@@ -486,43 +576,20 @@ PAGINI = [
 # --------------------------------------------------------------- privacy ---
 {
     "cale": "privacy/",
-    "titlu_tab": "Privacy | F.A.M.s Mobile Catering",
-    "descriere": "How the details you send through the F.A.M.s enquiry form are used.",
+    "titlu_tab": "Privacy & Cookies | F.A.M.s Mobile Catering",
+    "descriere": "How F.A.M.s Mobile Catering uses the details you send us, who "
+                 "sees them, how long we keep them, and your rights under UK GDPR.",
     "indexare": False,
     "blocuri": [
         {"tip": "titlu_pagina",
-         "eticheta": "Privacy",
+         "eticheta": "Privacy and cookies",
          "titlu": "What happens to<br>what you send us.",
-         "lede": "Short version: we use it to answer your enquiry, and nothing else."},
+         "lede": "Short version: we use it to answer your enquiry and run your "
+                 "booking, nothing else. This site sets no cookies and has no "
+                 "tracking. Last updated 13 October 2026."},
 
         {"tip": "text_lung",
-         "sectiuni": [
-             ("What you give us",
-              ["When you submit the enquiry form you may give us your name, contact "
-               "details, event date, location, guest numbers, dietary information and "
-               "anything else you choose to add."]),
-             ("What we use it for",
-              ["To reply to you, discuss the event, prepare a quote, and talk about "
-               "catering you have asked us to consider. Nothing else. We do not sell "
-               "it and we do not send marketing to it."]),
-             ("Allergy and dietary details",
-              ["Please give us only what is relevant to planning the catering. Where "
-               "you tell us about an allergy, we use that to discuss what we can "
-               "safely offer you."]),
-             ("Where the form goes",
-              ["The enquiry form is stored by the site’s hosting provider (Netlify) "
-               "and forwarded to our email. When you send it, the same details are "
-               "written into a WhatsApp message on your own device; nothing goes to "
-               "WhatsApp until you press send there yourself.",
-               "We keep enquiries for as long as we need them to plan and follow up "
-               "the event, then delete them."]),
-             ("Your choices",
-              ["You can ask what you have sent us, and ask for it to be corrected or "
-               "deleted. Write to fams.company2021@gmail.com."]),
-             ("Changes",
-              ["This page should be reviewed whenever the contact form, hosting or "
-               "any analytics on the site change."]),
-         ]},
+         "sectiuni": SECTIUNI_CONFIDENTIALITATE},
     ],
 },
 

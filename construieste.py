@@ -341,7 +341,8 @@ def bloc_formular(b, p):
 {chr(10).join("      " + g for g in grupuri)}
       <p class="camp camp--lat consimtamant">
         <label><input type="checkbox" name="consent" required>
-          <span>I’m happy for F.A.M.s to use these details to reply to my enquiry.
+          <span>I’m happy for F.A.M.s to use these details, including any allergy
+          or dietary information, to reply to my enquiry and plan the food.
           <a href="{p}privacy/">How we handle it</a>.</span></label>
       </p>
       <button class="buton" type="submit">Send enquiry</button>
@@ -434,6 +435,21 @@ def antet(p, cale_curenta):
 </header>"""
 
 
+def date_legale():
+    """Randul legal din subsol, doar cu ce e completat in C.FIRMA."""
+    f = C.FIRMA
+    bucati = []
+    if f["nume_legal"]:
+        bucati.append(f"Trading name of {f['nume_legal']}")
+    if f["nr_companie"]:
+        bucati.append(f"Company no. {f['nr_companie']}")
+    if f["adresa"]:
+        bucati.append(f["adresa"])
+    if f["tva"]:
+        bucati.append(f"VAT {f['tva']}")
+    return "".join(f"<br>{b}" for b in bucati)
+
+
 def subsol(p):
     legaturi = "".join(f'<a href="{p}{c}">{e}</a>' for c, e in navigatie())
     retele = "".join(f'<a href="{u}" rel="noopener me" target="_blank">{n}</a>'
@@ -460,8 +476,8 @@ def subsol(p):
     </div>
   </div>
   <div class="container subsol__jos">
-    <p>&copy; {an} {C.SITE["nume_lung"]}</p>
-    <p><a href="{p}privacy/">Privacy</a></p>
+    <p>&copy; {an} {C.SITE["nume_lung"]}{date_legale()}</p>
+    <p><a href="{p}privacy/">Privacy &amp; cookies</a></p>
   </div>
 </footer>"""
 
@@ -488,6 +504,10 @@ def date_structurate(pag, p):
             {"@type": "Country", "name": "United Kingdom"},
         ],
     }
+    if C.FIRMA["nume_legal"]:
+        org["legalName"] = C.FIRMA["nume_legal"]
+    if C.FIRMA["tva"]:
+        org["vatID"] = C.FIRMA["tva"]
     if DOMENIU:
         org["url"] = absolut("")
         org["image"] = f"{DOMENIU}/assets/foto/social-preview.webp"
@@ -711,9 +731,8 @@ SABLON = """<!doctype html>
 <meta name="theme-color" content="#0a0908">
 <link rel="icon" href="{p}assets/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="{p}site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+<link rel="preload" href="{p}assets/fonturi/cormorant-garamond-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{p}assets/fonturi/jost-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{p}assets/styles.css?v={v_css}">
 {structurate}
 </head>
