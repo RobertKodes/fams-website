@@ -23,9 +23,9 @@ SITE = {
     # fara + si fara spatii. Nu apare nicaieri in pagina.
     "whatsapp": "447944643757",
     "social": [
-        ("Instagram", "https://www.instagram.com/f.a.m.s2021"),
+        ("Instagram", "https://www.instagram.com/fams.company2021"),
         ("Facebook", "https://www.facebook.com/share/1DTDHNFWVt/"),
-        ("TikTok", "https://www.tiktok.com/@fams2021mobilecatering"),
+        ("TikTok", "https://www.tiktok.com/@fams.company2021"),
     ],
 }
 
